@@ -1,18 +1,23 @@
-# Using official python runtime base image
-FROM python:2.7
+FROM haskell
 
-# Set the application directory
-WORKDIR /app
+WORKDIR /opt/server
 
-# Install our requirements.txt
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+RUN cabal update
 
-# Copy our code from the current folder to /app inside the container
-ADD . /app
+# Add just the .cabal file to capture dependencies
+COPY ./votacion.cabal /opt/server/votacion.cabal
 
-# Make port 80 available for links and/or publish
+# Docker will cache this command as a layer, freeing us up to
+# modify source code without re-installing dependencies
+# (unless the .cabal file changes!)
+RUN cabal install --only-dependencies -j4
+
+# Add and Install Application Code
+COPY . /opt/server
+RUN cabal build
+
+
+ENV PORT 80
 EXPOSE 80
 
-# Define our command to be run when launching the container
-CMD ["python", "app.py"]
+CMD ["cabal", "run"]

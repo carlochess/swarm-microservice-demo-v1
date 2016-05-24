@@ -1,3 +1,11 @@
+# Main diference: Haskell
+The vote frontend (web-vote-app) was rewritten in haskell using Scotty.
+
+![Cluster](https://raw.githubusercontent.com/carlochess/swarm-microservice-demo-v1/master/Arquitectura.png)
+
+# Haskell docker image is about 720 mb
+Please use dockerize to reduce it to just 35 mb
+
 # Swarm Example Cluster:  Microservices App
 
 This is a sample Swarm cluster that illustrates how Swarm can be used as the foundation for a high-traffic microservice-architecture web application.  It is based on the Docker Cats-vs-Dogs voting example application, but re-architected to accomodate arbitrarily large scale through the use of parallel vote capture frontends and asynchronous background workers processing each vote.
